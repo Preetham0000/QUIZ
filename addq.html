@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Own Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, button {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<form id="quizForm">
+    <label for="question">Question:</label>
+    <input type="text" id="question" name="question" required>
+
+    <label for="answer">Answer:</label>
+    <input type="text" id="answer" name="answer" required>
+
+    <button type="button" onclick="addQuestion()">Add Question</button>
+    <button type="button" onclick="generateQuiz()" id="generateBtn" disabled>Generate Quiz</button>
+</form>
+
+<div id="quizOutput"></div>
+
+<script>
+    let quizData = [];
+
+    function addQuestion() {
+        const questionInput = document.getElementById('question');
+        const answerInput = document.getElementById('answer');
+
+        const question = questionInput.value.trim();
+        const answer = answerInput.value.trim();
+
+        if (question !== '' && answer !== '') {
+            quizData.push({ question, answer });
+            questionInput.value = '';
+            answerInput.value = '';
+            alert('Question added!');
+            document.getElementById('generateBtn').disabled = false;
+        } else {
+            alert('Please enter both a question and an answer.');
+        }
+    }
+
+    function generateQuiz() {
+        const quizOutput = document.getElementById('quizOutput');
+        if (quizData.length > 0) {
+            let outputHTML = '<h2>Your Quiz:</h2>';
+            quizData.forEach((item, index) => {
+                outputHTML += `<p><strong>Question ${index + 1}:</strong> ${item.question}<br><strong>Answer:</strong> ${item.answer}</p>`;
+            });
+            quizOutput.innerHTML = outputHTML;
+        } else {
+            alert('Please add at least one question before generating the quiz.');
+        }
+    }
+</script>
+
+</body>
+</html>
